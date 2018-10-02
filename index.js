@@ -64,6 +64,9 @@ var SendIntentAndroid = {
     shareTextToLine(options: Object) {
         RNSendIntentAndroid.shareTextToLine(options);
     },
+    shareImageToWhatsapp(text, mediaPath) {
+        RNSendIntentAndroid.shareImageToWhatsapp(text, mediaPath);
+    },
     shareImageToInstagram(type, mediaPath) {
         RNSendIntentAndroid.shareImageToInstagram(type, mediaPath);
     },
