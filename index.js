@@ -2,10 +2,8 @@
  * @providesModule SendIntentAndroid
  */
 
-"use strict";
-
 var { Platform, NativeModules } = require("react-native");
-var RNSendIntentAndroid = NativeModules.SendIntentAndroid;
+var RNSendIntentAndroid = NativeModules.SendIntentAndroid || {};
 
 var SendIntentAndroid = {
     TEXT_PLAIN: Platform.OS === "android" ? RNSendIntentAndroid.TEXT_PLAIN : "text/plain",
@@ -17,14 +15,14 @@ var SendIntentAndroid = {
             RNSendIntentAndroid.sendText(config.text, config.type || "text/plain");
         }
     },
-    sendPhoneCall(phoneNumber) {
-        RNSendIntentAndroid.sendPhoneCall(phoneNumber);
+    sendPhoneCall(phoneNumber, phoneAppOnly = false) {
+        RNSendIntentAndroid.sendPhoneCall(phoneNumber, phoneAppOnly);
     },
-    sendPhoneDial(phoneNumber) {
-        RNSendIntentAndroid.sendPhoneDial(phoneNumber);
+    sendPhoneDial(phoneNumber, phoneAppOnly = false) {
+        RNSendIntentAndroid.sendPhoneDial(phoneNumber, phoneAppOnly);
     },
-    sendSms(phoneNumber, body) {
-        RNSendIntentAndroid.sendSms(phoneNumber, body || null);
+    sendSms(phoneNumber, body = null) {
+        RNSendIntentAndroid.sendSms(phoneNumber, body);
     },
     addCalendarEvent(config) {
         RNSendIntentAndroid.addCalendarEvent(
@@ -46,11 +44,14 @@ var SendIntentAndroid = {
     openCalendar() {
         RNSendIntentAndroid.openCalendar();
     },
-    sendMail(mail, subject, body) {
-        RNSendIntentAndroid.sendMail(mail, subject || "", body || "");
+    sendMail(mail, subject = "", body = "") {
+        RNSendIntentAndroid.sendMail(mail, subject, body);
     },
-    openChooserWithOptions(options: Object, title: string) {
+    openChooserWithOptions(options, title) {
         RNSendIntentAndroid.openChooserWithOptions(options, title);
+    },
+    openChooserWithMultipleOptions(options, title) {
+        RNSendIntentAndroid.openChooserWithMultipleOptions(options, title);
     },
     openMaps(query) {
         RNSendIntentAndroid.openMaps(query);
@@ -61,7 +62,7 @@ var SendIntentAndroid = {
     openMapsWithRoute(query, mode) {
         RNSendIntentAndroid.openMapsWithRoute(query, mode);
     },
-    shareTextToLine(options: Object) {
+    shareTextToLine(options) {
         RNSendIntentAndroid.shareTextToLine(options);
     },
     shareImageToWhatsapp(text, mediaPath) {
@@ -76,6 +77,9 @@ var SendIntentAndroid = {
     getVoiceMailNumber() {
         return RNSendIntentAndroid.getVoiceMailNumber();
     },
+    getPhoneNumber() {
+        return RNSendIntentAndroid.getPhoneNumber();
+    },
     openApp(packageName, extras) {
         return RNSendIntentAndroid.openApp(packageName, extras || {});
     },
@@ -86,6 +90,9 @@ var SendIntentAndroid = {
      */
     openAppWithData(packageName, dataUri, mimeType, extras) {
         return RNSendIntentAndroid.openAppWithData(packageName, dataUri, mimeType, extras || {});
+    },
+    openFileChooser(options, title) {
+        return RNSendIntentAndroid.openFileChooser(options, title);
     },
 };
 

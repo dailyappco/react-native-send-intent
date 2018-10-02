@@ -96,6 +96,7 @@ SendIntentAndroid.sendSms('+55 48 9999-9999', 'SMS body text here');
 
 ## Example / Usage of Phone Calls
 It's very important ask for permission in your AndroidManifest.xml file if you need to use Phone Calls directly.
+You can add an optional second parameter, to fix the default phone app.
 
 Please add this line to your XML before using this example:
 
@@ -108,16 +109,17 @@ And them you can call in your JavaScript files:
 ```javascript
 var SendIntentAndroid = require('react-native-send-intent');
 
-SendIntentAndroid.sendPhoneCall('+55 48 9999-9999');
+SendIntentAndroid.sendPhoneCall('+55 48 9999-9999', true);
 ```
 
 ## Example / Usage of Phone Dial Screen
 For this use you doesn't need to ask any permission.
+You can add an optional second parameter, to fix the default phone app.
 
 ```javascript
 var SendIntentAndroid = require('react-native-send-intent');
 
-SendIntentAndroid.sendPhoneDial('+55 48 9999-9999');
+SendIntentAndroid.sendPhoneDial('+55 48 9999-9999', false);
 ```
 
 ## Example / Create Calendar Event
@@ -212,6 +214,33 @@ Opens Androids default share tray:
 
 ```
 
+## Example / Open Multiple Files Share With dialog
+
+Opens Androids default share tray:
+
+```javascript
+  // Create Multiple Files Share With dialog.
+  SendIntentAndroid.openChooserWithMultipleOptions([{
+    subject: 'Video One Title',
+    videoUrl: '/path_or_url/to/video.mp4',
+  },
+  {
+    subject: 'Video Two Title',
+    videoUrl: '/path_or_url/to/video2.mp4',
+  }],'Share videos to');
+
+  SendIntentAndroid.openChooserWithMultipleOptions([{
+    subject: 'Video Title',
+    text: 'Test shared with video',
+  },
+  {
+    subject: 'Video Title',
+    videoUrl: '/path_or_url/to/video.mp4',
+  }],'Share video to');
+
+```
+
+
 ## Example / Open Maps
 
 Opens Androids default maps app with location:
@@ -296,8 +325,9 @@ Opens a specified settings screen when passed one of the constant values availab
   SendIntentAndroid.openSettings('android.settings.SECURITY_SETTINGS');
 ```
 
+
 ## Example / Get voiceMail number
-Please add this line to your AndroidManifest.xml file before using this example:
+Please add this line to your AndroidManifest.xml file before using next example:
 
 ```xml
   <uses-permission android:name="android.permission.READ_PHONE_STATE" />
@@ -311,6 +341,37 @@ Please add this line to your AndroidManifest.xml file before using this example:
 
     //if u want to use next line, u need to add CALL_PHONE permission
     SendIntentAndroid.sendPhoneCall(voiceMailNumber);
+  });
+```
+
+
+## Example / Open File Chooser
+
+Opens Android chooser so the user can select which app will handle the file
+
+```javascript
+    SendIntentAndroid.openFileChooser({
+        subject: 'File subject', //optional,
+        fileUrl: '/path_or_url/to/file',
+        type: 'file_mimetype' 
+    }, 'Open file with:')
+```
+
+## Example / Get phone number
+Please add this lines to your AndroidManifest.xml file before using next example:
+
+```xml
+  <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+  <uses-permission android:name="android.permission.READ_PHONE_NUMBERS" />
+```
+
+```javascript
+  SendIntentAndroid.getPhoneNumber().then(phoneNumber => {
+    if (!phoneNumber) {
+      return console.error('Can`t get phoneNumber');
+    }
+
+    //do something with number
   });
 ```
 
